@@ -38,10 +38,3 @@ note that we need 586 workers, one per input dir. you can verify this number
 you can verify the job is running using qstat
 
 more info here: https://docs.hpc.arizona.edu/display/UAHPC/Running+Jobs
-
-## TODO
-
-cambiar PBS queue de debug a windfall
-walltime de 10 minutos a 100 horas
-numero de workers
-array de trabajos -- para distribuir input por medio de un indice
