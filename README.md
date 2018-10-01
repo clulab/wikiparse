@@ -23,8 +23,9 @@ package the project into a single fat jar:
 
 upload to hpc
 
-    scp wikiparse-assembly-0.1.0-SNAPSHOT.jar enoriega@filexfer.hpc.arizona.edu:.
-    scp annotator.pbs enoriega@filexfer.hpc.arizona.edu:.
+    scp target/scala-2.12/wikiparse-assembly-0.1.0-SNAPSHOT.jar marcov@filexfer.hpc.arizona.edu:.
+    scp annotator.pbs marcov@filexfer.hpc.arizona.edu:.
+    rsync -avz extracted marcov@filexfer.hpc.arizona.edu:wikiparse --log-file=hpc-user-rsync.log
 
 run in hpc
 
