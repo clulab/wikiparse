@@ -1,0 +1,10 @@
+#!/bin/bash
+#PBS -N annotatortest
+#PBS -W group_list=claytonm
+#PBS -q debug
+#PBS -l pvmem=168gb
+#PBS -l select=1:ncpus=28:mem=168gb:pcmem=6gb
+#PBS -l walltime=00:10:00
+date
+java -Xmx4g  -XX:MaxMetaspaceSize=1g -cp wikiparse-assembly-0.1.0-SNAPSHOT.jar org.clulab.wikiparse.ParseDocuments AA output_test
+date
