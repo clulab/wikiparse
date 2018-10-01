@@ -1,3 +1,7 @@
+# wikiparse
+
+parse wikipedia on the hpc
+
 ## prepare data
 
 download wikipedia dump:
