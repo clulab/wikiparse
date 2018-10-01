@@ -71,15 +71,25 @@ object ParseDocuments extends LazyLogging {
     }
   }
 
+  def prepareContent(title: String, content: String): String = {
+    var text = content.trim()
+    if (text.startsWith(title)) {
+      // remove title from content
+      text = text.substring(title.length).trim()
+    }
+    text
+  }
+
   def readWikiDocs(file: File): Iterator[WikiDoc] = {
     val data = uncompress(file)
-    for (m <- wikiDocPattern.findAllMatchIn(data)) yield {
-      val id = m.group("id")
-      val url = m.group("url")
-      val title = m.group("title")
-      val content = m.group("content").trim()
-      WikiDoc(id, url, title, content)
-    }
+    for {
+      m <- wikiDocPattern.findAllMatchIn(data)
+      id = m.group("id")
+      url = m.group("url")
+      title = m.group("title")
+      content = prepareContent(title, m.group("content"))
+      if content.nonEmpty
+    } yield WikiDoc(id, url, title, content)
   }
 
 }
