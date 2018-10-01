@@ -23,13 +23,17 @@ package the project into a single fat jar:
 
 upload to hpc
 
-    scp target/scala-2.12/wikiparse-assembly-0.1.0-SNAPSHOT.jar marcov@filexfer.hpc.arizona.edu:.
-    scp annotator.pbs marcov@filexfer.hpc.arizona.edu:.
     rsync -avz extracted marcov@filexfer.hpc.arizona.edu:wikiparse --log-file=hpc-user-rsync.log
+    scp target/scala-2.12/wikiparse-assembly-0.1.0-SNAPSHOT.jar marcov@filexfer.hpc.arizona.edu:wikiparse
+    scp annotator.pbs marcov@filexfer.hpc.arizona.edu:wikiparse
 
 run in hpc
 
-    qsub annotator.pbs
+    qsub -J 1-586 annotator.pbs
+
+note that we need 586 workers, one per input dir. you can verify this number
+
+    ls extracted | wc -l
 
 you can verify the job is running using qstat
 
