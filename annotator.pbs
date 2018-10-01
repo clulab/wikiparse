@@ -1,6 +1,6 @@
 #!/bin/bash
 #PBS -N annotatortest
-#PBS -W group_list=msurd
+#PBS -W group_list=msurdeanu
 #PBS -q windfall
 #PBS -l pvmem=168gb
 #PBS -l select=21:ncpus=28:mem=168gb:pcmem=6gb
