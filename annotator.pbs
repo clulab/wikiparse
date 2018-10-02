@@ -8,7 +8,7 @@
 
 date
 INPUT_DIR=$(find extracted/ -type d -not -path extracted/ | sort | sed "${PBS_ARRAY_INDEX}q;d")
-OUTPUT_DIR=serialized/${INPUT_DIR##./}
+OUTPUT_DIR=serialized/$(basename $INPUT_DIR)
 # if there are more workers than input_dirs then INPUT_DIR will be empty and we should skip it
 if [[ ! -z "$INPUT_DIR" ]]; then
     java -Xmx4g -XX:MaxMetaspaceSize=1g -cp wikiparse-assembly-0.1.0-SNAPSHOT.jar org.clulab.wikiparse.ParseDocuments $INPUT_DIR $OUTPUT_DIR
