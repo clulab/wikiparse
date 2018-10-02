@@ -9,12 +9,16 @@
 # print start time
 date
 
+DATA_DIR=extracted
+
 # get input dir based on worker index
-INPUT_DIR=$(find extracted/ -type d -not -path extracted/ | sort | sed "${PBS_ARRAY_INDEX}q;d")
+INPUT_DIR=$(find $DATA_DIR -type d -not -path $DATA_DIR | sort | sed "${PBS_ARRAY_INDEX}q;d")
+echo "INPUT_DIR=$INPUT_DIR"
 
 # make output dir based on input dir
 # if input dir is `extracted/AA` then the output dir should be `serialized/AA`
 OUTPUT_DIR=serialized/$(basename $INPUT_DIR)
+echo "OUTPUT_DIR=$OUTPUT_DIR"
 
 # parse documents
 java -Xmx4g -XX:MaxMetaspaceSize=1g -cp wikiparse-assembly-0.1.0-SNAPSHOT.jar org.clulab.wikiparse.ParseDocuments $INPUT_DIR $OUTPUT_DIR
