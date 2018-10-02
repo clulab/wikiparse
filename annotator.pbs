@@ -4,7 +4,7 @@
 #PBS -q standard
 #PBS -l pvmem=168gb
 #PBS -l select=21:ncpus=28:mem=168gb:pcmem=6gb
-#PBS -l walltime=100:00:00
+#PBS -l walltime=05:00:00
 
 # print start time
 date
