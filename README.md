@@ -45,3 +45,7 @@ you can cancel a job with `qdel`.
 you can use `va` to consult the remaining number of hours you have.
 
 more info here: https://docs.hpc.arizona.edu/display/UAHPC/Running+Jobs
+
+## Notes
+
+[PBS Script Assistant](https://jobbuilder.hpc.arizona.edu/)
