@@ -32,7 +32,7 @@ object ParseDocuments extends LazyLogging {
 
     logger.info("parsing ...")
     for {
-      file <- inputDir.listFilesByWildcard("*.bz2", recursive = true)
+      file <- inputDir.listFilesByWildcard("*.bz2", recursive = true).toVector.par
       wikidoc <- readWikiDocs(file)
     } {
       // annotate doc and serialize to json string
