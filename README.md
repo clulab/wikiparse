@@ -17,7 +17,9 @@ to extract docs into the `extracted` directory
 
 read documents from `extracted` directory and save results in `output` directory:
 
-    sbt 'runMain org.clulab.wikiparse.ParseDocuments extracted output'
+    sbt 'runMain org.clulab.wikiparse.ParseDocuments extracted output -1'
+
+The third parameter specifies the sample size (number of files).  A value of -1 indicates that all data should be used.
 
 ## hpc
 

@@ -1,11 +1,13 @@
 package org.clulab.wikiparse
 
+import scala.util.Random
 import java.io._
 import java.nio.charset.StandardCharsets.UTF_8
 import com.typesafe.scalalogging.LazyLogging
 import org.apache.commons.io.IOUtils
 import org.apache.commons.compress.compressors.CompressorStreamFactory
 import ai.lum.common.FileUtils._
+import ai.lum.common.RandomUtils._
 import org.clulab.processors.clu.CluProcessor
 import org.clulab.serialization.json._
 
@@ -14,10 +16,12 @@ object ParseDocuments extends LazyLogging {
   case class WikiDoc(id: String, url: String, title: String, content: String)
 
   val wikiDocPattern = """(?s)<doc id="(?<id>[^"]+)" url="(?<url>[^"]+)" title="(?<title>[^"]+)">(?<content>.*?)</doc>""".r
+  
+  val rand = new Random(42)
 
   def main(args: Array[String]): Unit = {
 
-    if (args.size != 2) {
+    if (args.size != 3) {
       sys.error("wrong command line arguments")
     }
 
@@ -31,8 +35,16 @@ object ParseDocuments extends LazyLogging {
     proc.annotate("this")
 
     logger.info("parsing ...")
+
+
+    val sampleSize = args.last.toInt
+
+    val files = inputDir.listFilesByWildcard("*.bz2", recursive = true).toArray
+
+    val subset = if (sampleSize == -1) files else rand.sample[File](files, k = sampleSize, withReplacement=false)
+
     for {
-      file <- inputDir.listFilesByWildcard("*.bz2", recursive = true).toVector.par
+      file <- subset.par
       wikidoc <- readWikiDocs(file)
     } {
       // annotate doc and serialize to json string
