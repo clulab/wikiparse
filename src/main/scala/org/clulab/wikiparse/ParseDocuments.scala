@@ -6,7 +6,7 @@ import com.typesafe.scalalogging.LazyLogging
 import org.apache.commons.io.IOUtils
 import org.apache.commons.compress.compressors.CompressorStreamFactory
 import ai.lum.common.FileUtils._
-import org.clulab.processors.fastnlp.FastNLPProcessor
+import org.clulab.processors.clu.CluProcessor
 import org.clulab.serialization.json._
 
 object ParseDocuments extends LazyLogging {
@@ -27,7 +27,7 @@ object ParseDocuments extends LazyLogging {
     val outputDir = new File(args(1)).getCanonicalFile()
 
     logger.info("starting processor ...")
-    val proc = new FastNLPProcessor
+    val proc = new CluProcessor
     proc.annotate("this")
 
     logger.info("parsing ...")
@@ -43,10 +43,11 @@ object ParseDocuments extends LazyLogging {
       val outDirStructure = file.getCanonicalPath().replace(inputDir.getCanonicalPath() + "/", "")
       val outputFileDir = new File(outputDir, outDirStructure)
       outputFileDir.mkdirs()
-      val outputFile = new File(outputFileDir, s"${wikidoc.id}.json.bz2")
+      val outputFile = new File(outputFileDir, s"${wikidoc.id}.json")
       // write output
       logger.info(s"saving ${outputFile} ...")
-      writeCompressed(outputFile, json)
+      outputFile.writeString(json)
+      //writeCompressed(outputFile, json)
     }
 
   }
